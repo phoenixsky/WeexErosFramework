@@ -281,8 +281,11 @@ public class DefaultWXImageAdapter implements IWXImgLoaderAdapter {
             }
         });
 
+//        BMHookGlide.load(BMWXApplication.getWXApplication(), loadUri).apply(new RequestOptions()
+//                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).transforms(new CenterCrop())).into(viewTarget);
+
         BMHookGlide.load(BMWXApplication.getWXApplication(), loadUri).apply(new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).transforms(new CenterCrop())).into(viewTarget);
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).transforms(new CenterCrop())).into(view);
 
     }
 
