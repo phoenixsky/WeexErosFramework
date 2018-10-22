@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import com.eros.framework.BMWXEnvironment;
 import com.eros.framework.R;
 import com.eros.framework.activity.AbstractWeexActivity;
+import com.eros.framework.activity.MainActivity;
 import com.eros.framework.constant.Constant;
 import com.eros.framework.manager.ManagerFactory;
 import com.eros.framework.manager.impl.ModalManager;
@@ -74,10 +75,14 @@ public class DefaultRouterAdapter {
             pathUri = Uri.parse(BMWXEnvironment.mPlatformConfig.getUrl().getJsServer() +
                     "/dist/js" + pathUrl);
         }
-        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.putExtra(Constant.ROUTERPARAMS, routerModel);
+//        intent.addCategory(bmpageCategory);
+//        activity.startActivity(intent);
+
+        Intent intent = new Intent(activity, MainActivity.class);
         intent.putExtra(Constant.ROUTERPARAMS, routerModel);
         intent.setData(pathUri);
-        intent.addCategory(bmpageCategory);
         activity.startActivity(intent);
 
         if (Constant.ACTIVITIES_ANIMATION.ANIMATION_PUSH.equals(routerModel.type)) {
