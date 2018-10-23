@@ -108,11 +108,12 @@ public class DefaultImageAdapter {
             for (ImageItem item : items) {
                 Bitmap bitmap = ImageUtil.getBitmap(item.path, context);
                 //TODO 图片改为全路径
+                int degree = ImageUtil.readPictureDegree(item.path);
                 String path = new File(FileManager.getTempFilePath(context), String.valueOf
                         (SystemClock.currentThreadTimeMillis())).getAbsolutePath();
                 String imageFileUrl = ImageUtil.zoomImage(context, bitmap, bean == null ? 0 :
                         (int) bean.imageWidth, Constant
-                        .ImageConstants.BIGGESTWIDTH, path);
+                        .ImageConstants.BIGGESTWIDTH,degree, path);
                 imagesFilrUrl.add(imageFileUrl);
                 bitmap.recycle();
 
