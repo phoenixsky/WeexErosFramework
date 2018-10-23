@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.eros.framework.BMWXEnvironment;
+import com.eros.framework.activity.MainActivity;
 import com.eros.framework.adapter.router.DefaultRouterAdapter;
 import com.eros.framework.constant.Constant;
 import com.eros.framework.manager.ManagerFactory;
@@ -35,7 +36,7 @@ public class EventSetHomePage extends EventGate{
         String homePage = BMWXEnvironment.mPlatformConfig.getPage().getHomePage(context);
         RouterModel router = new RouterModel(homePage, Constant.ACTIVITIES_ANIMATION
                 .ANIMATION_PUSH, null, null, false, null);
-        Intent intent = performStartActivity(router,DefaultRouterAdapter.getInstance().getPageCategory(context));
+        Intent intent = performStartActivity(router,DefaultRouterAdapter.getInstance().getPageCategory(context),context);
         context.startActivity(intent);
 //        PendingIntent restartIntent = PendingIntent.getActivity(
 //                context.getApplicationContext(), 0, intent, Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -44,7 +45,7 @@ public class EventSetHomePage extends EventGate{
 //                restartIntent);
     }
 
-    private Intent performStartActivity(RouterModel routerModel, String bmpageCategory) {
+    private Intent performStartActivity(RouterModel routerModel, String bmpageCategory,Context context) {
         String pathUrl = routerModel.url;
         if (TextUtils.isEmpty(pathUrl)) return null;
         Uri pathUri = Uri.parse(pathUrl);
@@ -53,11 +54,17 @@ public class EventSetHomePage extends EventGate{
             pathUri = Uri.parse(BMWXEnvironment.mPlatformConfig.getUrl().getJsServer() +
                     "/dist/js" + pathUrl);
         }
-        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.putExtra(Constant.ROUTERPARAMS, routerModel);
+//        intent.setData(pathUri);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addCategory(bmpageCategory);
+
+        Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(Constant.ROUTERPARAMS, routerModel);
-        intent.setData(pathUri);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addCategory(bmpageCategory);
+        intent.setData(pathUri);
+
         return intent;
     }
 }
