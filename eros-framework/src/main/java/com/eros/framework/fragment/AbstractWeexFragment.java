@@ -207,7 +207,7 @@ public class AbstractWeexFragment extends Fragment implements IWXRenderListener 
     }
 
     public void refresh() {
-        getActivity().runOnUiThread(new Runnable() {
+        mAct.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 DispatchEventManager dispatchEventManager = ManagerFactory.getManagerService
