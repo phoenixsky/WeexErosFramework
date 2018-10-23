@@ -46,6 +46,15 @@ public class StatusBarManager {
         if (style.statusBarStyle == null || "Default".equals(style.statusBarStyle)) {
             Helper.statusBarLightMode(activity);
         }
+        View decorView = activity.getWindow().getDecorView();
+        int systemUiVisibility = decorView.getSystemUiVisibility();
+        if (style.navShow) {
+            //非沉浸
+            decorView.setSystemUiVisibility(systemUiVisibility);
+        } else {
+            //沉浸
+            decorView.setSystemUiVisibility(systemUiVisibility | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN );
+        }
     }
 
     public static void setHeaderBg(RouterModel router, AbstractWeexActivity activity) {
@@ -90,7 +99,7 @@ public class StatusBarManager {
     }
 
     private static void translucentStatusBar(AbstractWeexActivity activity) {
-        StatusBarCompat.translucentStatusBar(activity);
+        StatusBarCompat.translucentStatusBar(activity,true);
     }
 
 

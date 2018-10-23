@@ -243,6 +243,7 @@ public class DefaultNavigationAdapter {
             ((AbstractWeexActivity) activity).setRouterParam(routerModel);
             ((AbstractWeexActivity) activity).setNavigationBar();
             StatusBarManager.setHeaderBg(routerModel, (AbstractWeexActivity) activity);
+            StatusBarManager.setStatusBarFontStyle(activity,routerModel);
         }
     }
 
