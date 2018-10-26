@@ -42,7 +42,7 @@ public class FlymeHelper implements IHelper {
                 window.setAttributes(lp);
                 result = true;
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
         return result;

@@ -40,7 +40,7 @@ public class MIUIHelper implements IHelper {
                 }
                 result = true;
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
         return result;
