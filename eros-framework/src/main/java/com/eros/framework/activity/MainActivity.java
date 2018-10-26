@@ -18,6 +18,7 @@ import com.eros.framework.BMWXEnvironment;
 import com.eros.framework.R;
 import com.eros.framework.constant.Constant;
 import com.eros.framework.event.TabbarEvent;
+import com.eros.framework.extend.comoponents.BMMask;
 import com.eros.framework.manager.impl.GlobalEventManager;
 import com.eros.framework.model.RouterModel;
 import com.eros.framework.model.TabbarBadgeModule;
@@ -26,6 +27,8 @@ import com.eros.framework.utils.SharePreferenceUtil;
 import com.eros.framework.view.TableView;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.WXSDKInstance;
+import com.taobao.weex.ui.component.WXComponent;
+import com.taobao.weex.ui.component.WXVContainer;
 
 public class MainActivity extends AbstractWeexActivity {
     private FrameLayout layout_container;
@@ -91,8 +94,15 @@ public class MainActivity extends AbstractWeexActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+
+            WXSDKInstance wxsdkInstance = getWXSDkInstance();
+            if(wxsdkInstance != null){
+                if (handleMask(wxsdkInstance.getRootComponent())){
+                     return true;
+            	}
+            }
+
             if (isHomePage() && BMWXEnvironment.mPlatformConfig.isAndroidIsListenHomeBack()) {
-                WXSDKInstance wxsdkInstance = getWXSDkInstance();
                 if (wxsdkInstance != null) {
                     GlobalEventManager.homeBack(wxsdkInstance);
                     return true;
@@ -100,6 +110,28 @@ public class MainActivity extends AbstractWeexActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public boolean handleMask(WXComponent component){
+        if(component instanceof WXVContainer){
+            WXVContainer container = (WXVContainer) component;
+            if(container instanceof BMMask){
+                 ((BMMask) container).hide();
+            } else {
+                for (int childCount = container.getChildCount()-1; childCount >= 0; childCount--) {
+                    WXComponent child = container.getChild(childCount);
+                    if(child instanceof BMMask && ((BMMask) child).shouldShow()){
+                        ((BMMask) child).hide();
+                        return true;
+                    } else {
+                        if(handleMask(child)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override

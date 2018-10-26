@@ -130,7 +130,7 @@ public class BMMask extends WXVContainer<BMMaskLayout> implements View.OnClickLi
         this.mCurrentPosition = position;
     }
 
-    private boolean shouldShow() {
+    public boolean shouldShow() {
         return isAnimating || mCurrentStatus == STATUS_SHOW;
     }
 
