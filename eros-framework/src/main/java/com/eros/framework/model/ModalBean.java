@@ -14,6 +14,7 @@ public class ModalBean implements Serializable {
     private int duration;
     private String titleAlign;
     private String messageAlign;
+    private boolean cancelable;
 
     public String getTitleAlign() {
         return titleAlign;
@@ -69,5 +70,13 @@ public class ModalBean implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isCancelable() {
+        return cancelable;
+    }
+
+    public void setCancelable(boolean cancelable) {
+        this.cancelable = cancelable;
     }
 }

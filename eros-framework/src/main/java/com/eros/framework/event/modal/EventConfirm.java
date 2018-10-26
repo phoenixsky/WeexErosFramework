@@ -47,6 +47,6 @@ public class EventConfirm extends EventGate {
                     cancel.invoke(null);
                 }
             }
-        }, bean.getTitleAlign(), bean.getMessageAlign());
+        }, bean.getTitleAlign(), bean.getMessageAlign(),bean.isCancelable());
     }
 }

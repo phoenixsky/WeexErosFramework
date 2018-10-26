@@ -41,6 +41,6 @@ public class EventAlert extends EventGate {
                     callback.invoke(null);
                 }
             }
-        }, null, null, bean.getTitleAlign(), bean.getMessageAlign());
+        }, null, null, bean.getTitleAlign(), bean.getMessageAlign(),bean.isCancelable());
     }
 }
