@@ -127,11 +127,11 @@ public class BrowseImgActivity extends Activity implements ViewPager.OnPageChang
         public Object instantiateItem(ViewGroup container, int position) {
             PhotoView imageView = new PhotoView(container.getContext());
             imageView.setScaleType(ImageView.ScaleType.CENTER);
-            imageView.setBackgroundColor(Color.BLACK);
+//            imageView.setBackgroundColor(Color.BLACK);
             imageView.setZoomable(true);
-            imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+            imageView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
                 @Override
-                public void onPhotoTap(View view, float x, float y) {
+                public void onViewTap(View view, float x, float y) {
                     finish();
                 }
             });
