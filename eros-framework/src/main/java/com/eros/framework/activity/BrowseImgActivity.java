@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.eros.framework.R;
 import com.eros.framework.model.BroeserImgModuleBean;
 import com.eros.framework.view.ViewPagerFix;
@@ -20,6 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 import java.util.List;
 
@@ -125,10 +127,17 @@ public class BrowseImgActivity extends Activity implements ViewPager.OnPageChang
         public Object instantiateItem(ViewGroup container, int position) {
             PhotoView imageView = new PhotoView(container.getContext());
             imageView.setScaleType(ImageView.ScaleType.CENTER);
-            imageView.setBackgroundColor(Color.WHITE);
+            imageView.setBackgroundColor(Color.BLACK);
             imageView.setZoomable(true);
+            imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+                @Override
+                public void onPhotoTap(View view, float x, float y) {
+                    finish();
+                }
+            });
             Glide.with(BrowseImgActivity.this)
                     .load(images.get(position))
+                    .transition(new DrawableTransitionOptions().crossFade(500))
                     .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter())
                     .into(imageView);
             container.addView(imageView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout

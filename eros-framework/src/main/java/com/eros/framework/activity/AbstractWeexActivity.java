@@ -724,6 +724,7 @@ public class AbstractWeexActivity extends AppCompatActivity implements IWXRender
             cameraResult();
             return;
         }
+
         /**
          * 选择照片 上传
          */
@@ -736,18 +737,17 @@ public class AbstractWeexActivity extends AppCompatActivity implements IWXRender
                 }
                 break;
         }
-        /**
-         * 选择照片 返回
-         */
-        switch (resultCode) {
-            case ImagePicker.RESULT_CODE_ITEMS:
+        if(Constant.ImageConstants.IMAGE_NOT_UPLOADER_PICKER == requestCode){
+            if(resultCode == ImagePicker.RESULT_CODE_ITEMS){
                 if (data != null && requestCode == Constant.ImageConstants
                         .IMAGE_NOT_UPLOADER_PICKER) {
                     ArrayList<ImageItem> items = (ArrayList<ImageItem>) data
                             .getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                     pickReturn(items);
                 }
-                break;
+            }else{//未选择照片 取消
+                pickReturn(new ArrayList<ImageItem>());
+            }
         }
 //        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);

@@ -8,7 +8,7 @@
 
     android:useLevel="false">
 
-    <solid android:color="@color/c_46c4dd" />
+    <solid android:color="@color/colorPrimary" />
 
     <size
         android:width="15dp"
