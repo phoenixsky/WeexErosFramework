@@ -862,6 +862,7 @@ public class AbstractWeexActivity extends AppCompatActivity implements IWXRender
         PermissionManager permissionManager = ManagerFactory.getManagerService(PermissionManager
                 .class);
         permissionManager.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        mWXInstance.onRequestPermissionsResult(requestCode,permissions,grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     }
