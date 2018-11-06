@@ -109,8 +109,9 @@ public class GlobalWebViewActivity extends AbstractWeexActivity {
         mWeb.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                Toast.makeText(mWeb.getContext(),"请在通知栏里查看下载进度",Toast.LENGTH_LONG).show();
-                downloadBySystem(url,contentDisposition,mimetype);
+//                Toast.makeText(mWeb.getContext(),"请在通知栏里查看下载进度",Toast.LENGTH_LONG).show();
+//                downloadBySystem(url,contentDisposition,mimetype);
+                downloadByBrowser(url);
             }
         });
         ModalManager.BmLoading.showLoading(this, "", true);
