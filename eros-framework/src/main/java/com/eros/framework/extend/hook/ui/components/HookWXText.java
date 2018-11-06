@@ -210,8 +210,18 @@ public class HookWXText extends WXText {
     }
 
     @Override
+    public void destroy() {
+        super.destroy();
+        if(mReceiver!=null){
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+        }
+    }
+
+    @Override
     public void onActivityDestroy() {
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+        if(mReceiver!=null){
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+        }
     }
 
     //benmu.org

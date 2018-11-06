@@ -1,6 +1,7 @@
 package com.eros.framework.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eros.framework.BMWXApplication;
 import com.eros.framework.BMWXEnvironment;
 import com.eros.framework.R;
+import com.eros.framework.activity.AbstractWeexActivity;
 import com.eros.framework.constant.WXConstant;
 import com.eros.framework.constant.WXEventCenter;
 import com.eros.framework.manager.ManagerFactory;
@@ -25,6 +28,7 @@ import com.eros.framework.utils.InsertEnvUtil;
 import com.eros.framework.utils.WXAnalyzerDelegate;
 import com.eros.framework.utils.WXCommonUtil;
 import com.eros.widget.view.DebugErrorDialog;
+import com.squareup.leakcanary.RefWatcher;
 import com.taobao.weex.IWXRenderListener;
 import com.taobao.weex.RenderContainer;
 import com.taobao.weex.WXSDKInstance;
@@ -50,9 +54,14 @@ public class AbstractWeexFragment extends Fragment implements IWXRenderListener 
     private boolean isVisibleToUser;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mAct = (AbstractWeexActivity) context;
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAct = getActivity();
         mRouterType = GlobalEventManager.TYPE_OPEN;
         mWxAnalyzerDelegate = new WXAnalyzerDelegate(getActivity());
         mWxAnalyzerDelegate.onCreate();
@@ -285,5 +294,14 @@ public class AbstractWeexFragment extends Fragment implements IWXRenderListener 
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = BMWXApplication.getWXApplication().getWatcher();
+        if(refWatcher != null){
+            refWatcher.watch(this);
+        }
     }
 }

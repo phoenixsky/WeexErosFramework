@@ -70,4 +70,9 @@ public class MainWeexFragment extends AbstractWeexFragment {
         DefaultNavigationAdapter.setTabbarNavigation(getActivity(), navigatorModel);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReloadReceiver);
+    }
 }

@@ -18,6 +18,8 @@ import com.eros.framework.manager.impl.GlobalEventManager;
 import com.eros.framework.manager.impl.LifecycleManager;
 import com.eros.framework.update.VersionChecker;
 import com.eros.framework.utils.DebugableUtil;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.taobao.weex.WXSDKInstance;
 
 import java.util.List;
@@ -32,7 +34,7 @@ public class BMWXApplication extends Application {
     private VersionChecker mVersionChecker;
     private DebuggerWebSocket debugSocket;
     private DefaultTypefaceAdapter typefaceAdapter;
-//    private RefWatcher mWatcher;
+    private RefWatcher mWatcher;
 
     /**
      * 是否全屏显示
@@ -48,14 +50,15 @@ public class BMWXApplication extends Application {
             mVersionChecker = new VersionChecker(this);
             registerLifecycle();
             initDebugSocket();
+//            mWatcher = LeakCanary.install(this);
 //            mWatcher = DebugableUtil.isDebug() ? LeakCanary.install(this) : RefWatcher.DISABLED;
         }
     }
 
 
-//    public RefWatcher getWatcher() {
-//        return mWatcher;
-//    }
+    public RefWatcher getWatcher() {
+        return mWatcher;
+    }
 
     private void initDebugSocket() {
         debugSocket = new DebuggerWebSocket(this);
@@ -129,6 +132,7 @@ public class BMWXApplication extends Application {
                 .INTERCEPTOR_ACTIVE).build());
 
     }
+
 
 
     public static BMWXApplication getWXApplication() {
