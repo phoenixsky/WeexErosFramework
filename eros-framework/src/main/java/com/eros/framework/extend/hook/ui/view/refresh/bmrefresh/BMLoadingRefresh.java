@@ -165,7 +165,9 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.eros.framework.R;
+import com.eros.framework.extend.hook.ui.view.HookBounceScrollerView;
 import com.taobao.weex.common.Constants;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.view.refresh.wrapper.BounceRecyclerView;
@@ -206,9 +208,16 @@ public class BMLoadingRefresh extends BMBaseRefresh {
     }
 
     private void hide() {
-        BounceRecyclerView recyclerView = (BounceRecyclerView) mWeakReference.get().getHostView();
-        recyclerView.finishPullRefresh();
-        recyclerView.onRefreshingComplete();
+        View hostView = mWeakReference.get().getHostView();
+        if (hostView instanceof BounceRecyclerView) {
+            BounceRecyclerView recyclerView = (BounceRecyclerView) hostView;
+            recyclerView.finishPullRefresh();
+            recyclerView.onRefreshingComplete();
+        } else if(hostView instanceof HookBounceScrollerView){
+            HookBounceScrollerView bounceScrollerView = (HookBounceScrollerView) hostView;
+            bounceScrollerView.finishPullRefresh();
+            bounceScrollerView.onRefreshingComplete();
+        }
         mCurrentState = STATE_IDLE;
         animation.stop();
         iv_loading.setImageResource(R.drawable.sdk_bmloading);
