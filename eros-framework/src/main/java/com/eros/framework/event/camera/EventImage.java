@@ -76,7 +76,15 @@ public class EventImage extends EventGate {
 
         String path = bean.path;
 
-        bitmap = BitmapFactory.decodeFile(path);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true; // 先获取原大小
+        BitmapFactory.decodeFile(path, options);
+        options.inJustDecodeBounds = false; // 获取新的大小
+        int sampleSize = (int) (options.outHeight / (float) 200);
+        if (sampleSize <= 0)
+            sampleSize = 1;
+        options.inSampleSize = sampleSize;
+        bitmap = BitmapFactory.decodeFile(path, options);
 
         // 获取bitmap的宽高，像素矩阵
         int width = bitmap.getWidth();
