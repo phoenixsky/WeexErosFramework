@@ -12,11 +12,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.eros.framework.BMWXEnvironment;
 import com.eros.framework.activity.AbstractWeexActivity;
 import com.eros.framework.adapter.router.RouterTracker;
 import com.eros.framework.manager.ManagerFactory;
-import com.eros.framework.manager.impl.ImageManager;
 import com.eros.framework.manager.impl.ParseManager;
 import com.eros.framework.manager.impl.status.StatusBarManager;
 import com.eros.framework.model.BaseResultBean;
@@ -29,10 +32,6 @@ import com.eros.framework.utils.ImageUtil;
 import com.eros.widget.utils.BaseCommonUtil;
 import com.eros.widget.utils.ColorUtils;
 import com.eros.widget.view.BaseToolBar;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.utils.WXUtils;
 
@@ -239,6 +238,7 @@ public class DefaultNavigationAdapter {
                             .class);
             routerModel.navShow = model.isNavShow();
             routerModel.navTitle = model.getTitle();
+            routerModel.statusBarStyle = model.getStatusBarStyle();
             routerModel.canBack = false;
             ((AbstractWeexActivity) activity).setRouterParam(routerModel);
             ((AbstractWeexActivity) activity).setNavigationBar();

@@ -21,7 +21,6 @@ import com.eros.framework.R;
 import com.eros.framework.activity.AbstractWeexActivity;
 import com.eros.framework.adapter.DefaultNavigationAdapter;
 import com.eros.framework.constant.WXEventCenter;
-import com.eros.framework.event.TabbarEvent;
 import com.eros.framework.fragment.MainWeexFragment;
 import com.eros.framework.manager.ManagerFactory;
 import com.eros.framework.manager.impl.dispatcher.DispatchEventManager;
@@ -37,7 +36,6 @@ import com.taobao.weex.bridge.JSCallback;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 首页 tebView
@@ -180,6 +178,7 @@ public class TableView extends RelativeLayout implements ViewPager.OnPageChangeL
         NatigatorModel model = new NatigatorModel();
         model.setNavShow(item.isNavShow());
         model.setTitle(item.getNavTitle());
+        model.setStatusBarStyle(item.getStatusBarStyle());
         return JSON.toJSONString(model);
     }
 
