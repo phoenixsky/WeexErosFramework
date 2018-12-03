@@ -14,7 +14,6 @@ import com.eros.framework.manager.ManagerFactory;
 import com.eros.framework.manager.impl.dispatcher.DispatchEventManager;
 import com.eros.framework.model.JsVersionInfoBean;
 import com.eros.framework.model.Md5MapperModel;
-import com.eros.framework.utils.AppUtils;
 import com.eros.framework.utils.AssetsUtil;
 import com.eros.framework.utils.SharePreferenceUtil;
 import com.eros.widget.utils.BaseCommonUtil;
@@ -137,26 +136,30 @@ public class VersionManager extends Manager {
         HashMap<String, String> params = new HashMap<>();
         params.put("appName", BMWXEnvironment.mPlatformConfig.getAppName());
         params.put("android", BaseCommonUtil.getVersionName(context));
-        String versionInfo = SharePreferenceUtil.getDownLoadVersion(context);
-        if (TextUtils.isEmpty(versionInfo)) {
-            versionInfo = SharePreferenceUtil.getVersion(context);
-        }
-        if (TextUtils.isEmpty(versionInfo)) {
-            versionInfo = "";
-        } else {
-            ParseManager parseManager = ManagerFactory.getManagerService(ParseManager.class);
-            JsVersionInfoBean jsVersionInfoBean = parseManager.parseObject(versionInfo,
+        String jsVersion = null;
+        String downLoadVersion = SharePreferenceUtil.getDownLoadVersion(context);
+        String appVersion = SharePreferenceUtil.getVersion(context);
+
+        ParseManager parseManager = ManagerFactory.getManagerService(ParseManager.class);
+        if (TextUtils.isEmpty(downLoadVersion)) {
+            JsVersionInfoBean versionInfoBean = parseManager.parseObject(appVersion,
                     JsVersionInfoBean.class);
-            if (jsVersionInfoBean == null) {
-                versionInfo = "";
+            jsVersion = versionInfoBean.getJsVersion();
+        } else {
+            JsVersionInfoBean download = parseManager.parseObject(downLoadVersion,
+                    JsVersionInfoBean.class);
+            JsVersionInfoBean app = parseManager.parseObject(appVersion,
+                    JsVersionInfoBean.class);
+            if (app.getAndroid().equals(download.getAndroid())) {
+                jsVersion = download.getJsVersion();
             } else {
-                versionInfo = jsVersionInfoBean.getJsVersion();
+                jsVersion = app.getJsVersion();
             }
         }
-        if (TextUtils.isEmpty(versionInfo)) {
+        if (TextUtils.isEmpty(jsVersion)) {
             return;
         }
-        params.put("jsVersion", versionInfo);
+        params.put("jsVersion", jsVersion);
         params.put("isDiff", isDiff ? "1" : "0");
         AxiosManager axiosManager = ManagerFactory.getManagerService(AxiosManager.class);
         axiosManager.get(url, params, null, callback, url, 0);
